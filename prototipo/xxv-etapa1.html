@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>XXV | Vídeos e criadores</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme:dark;
+  --bg:#16131a; --surface:#1f1b26; --surface-2:#2a2433; --line:#372f44;
+  --text:#f3eefa; --muted:#a79fb5; --purple:#8b5cf6; --gold:#e3b95a; --red:#e0445a;
+  --display:"Fraunces",Georgia,serif; --ui:"Manrope",system-ui,sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px);height:100%}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font:400 16px/1.55 var(--ui)}
+a,button,input{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.app{display:grid;grid-template-columns:240px 1fr;min-height:100vh}
+.side{position:sticky;top:0;height:100vh;padding:28px 20px;border-right:1px solid var(--line);display:flex;flex-direction:column;gap:8px}
+.logo{font:800 34px/1 var(--display);letter-spacing:.02em;margin:0 0 24px 8px;background:linear-gradient(120deg,var(--gold),var(--red));-webkit-background-clip:text;background-clip:text;color:transparent}
+.nav{display:flex;flex-direction:column;gap:4px}
+.nav button,.bottom button{background:none;border:0;border-radius:14px;padding:12px 14px;display:flex;align-items:center;gap:12px;text-align:left;color:var(--muted);font-weight:500;transition:background .2s,color .2s}
+.nav button:hover{background:var(--surface)}
+.nav button[aria-current="page"],.bottom button[aria-current="page"]{color:var(--text);background:var(--surface-2)}
+svg.i{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+main{padding:24px clamp(16px,4vw,48px) 120px;max-width:1180px;width:100%}
+.top{display:flex;gap:12px;align-items:center;margin-bottom:28px}
+.mlogo{display:none;font:800 26px/1 var(--display);color:var(--gold)}
+.search{flex:1;display:flex;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:0 16px}
+.search input{flex:1;background:none;border:0;padding:12px 0;outline:0;min-width:0}
+.search:focus-within{border-color:var(--purple)}
+.btn{border:0;border-radius:999px;padding:12px 22px;font-weight:700;background:linear-gradient(120deg,var(--purple),var(--red));color:#fff;transition:transform .15s,filter .2s}
+.btn:hover{filter:brightness(1.1)}.btn:active{transform:scale(.97)}
+.btn.ghost{background:var(--surface-2);border:1px solid var(--line)}
+.hero{position:relative;overflow:hidden;border-radius:28px;padding:clamp(28px,5vw,56px);background:linear-gradient(135deg,#2b1f45 0%,#1f1b26 55%,#2c1a22 100%);border:1px solid var(--line);margin-bottom:40px}
+.hero .big{position:absolute;right:-2%;top:50%;transform:translateY(-50%);font:800 clamp(140px,26vw,320px)/1 var(--display);color:transparent;-webkit-text-stroke:2px rgba(227,185,90,.35);pointer-events:none;user-select:none;animation:rise .9s ease-out both}
+@keyframes rise{from{opacity:0;transform:translateY(-44%)}to{opacity:1;transform:translateY(-50%)}}
+.hero h1{font:800 clamp(30px,5vw,52px)/1.08 var(--display);margin:0 0 14px;max-width:14ch}
+.hero p{color:var(--muted);max-width:44ch;margin:0 0 26px}
+.hero .row{display:flex;gap:12px;flex-wrap:wrap;position:relative}
+h2{font:600 24px/1.2 var(--display);margin:0 0 6px}
+.sec{margin-bottom:40px}
+.sec>p{margin:0 0 16px;color:var(--muted);font-size:14px}
+.chips{display:flex;gap:10px;overflow-x:auto;padding-bottom:6px;scrollbar-width:thin}
+.chip{flex:none;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:8px 18px;font-weight:500;font-size:14px;transition:border-color .2s,background .2s}
+.chip:hover{border-color:var(--gold)}
+.chip[aria-pressed="true"]{background:var(--purple);border-color:var(--purple);color:#fff}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:18px}
+.empty{grid-column:1/-1;border:1px dashed var(--line);border-radius:22px;padding:32px 20px;text-align:center;background:var(--surface)}
+.empty strong{display:block;margin-bottom:4px}
+.empty span{color:var(--muted);font-size:14px}
+.bottom{display:none}
+.toast{position:fixed;left:50%;bottom:calc(96px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);background:var(--surface-2);border:1px solid var(--gold);border-radius:14px;padding:12px 18px;opacity:0;pointer-events:none;transition:.25s;max-width:90vw;z-index:30}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+@media(max-width:820px){
+  .app{display:block}.side{display:none}.mlogo{display:block}
+  .bottom{display:grid;grid-template-columns:repeat(5,1fr);position:fixed;left:0;right:0;bottom:0;background:rgba(31,27,38,.96);backdrop-filter:blur(12px);border-top:1px solid var(--line);padding:6px 6px calc(6px + env(safe-area-inset-bottom,0px));z-index:20}
+  .bottom button{flex-direction:column;gap:2px;padding:8px 2px;font-size:11px;text-align:center;justify-content:center}
+  .bottom .pub{color:#fff}.bottom .pub svg{background:linear-gradient(120deg,var(--purple),var(--red));border-radius:12px;width:38px;height:38px;padding:8px}
+  .hero .big{opacity:.5}
+}
+.gate{position:fixed;inset:0;z-index:100;display:grid;place-items:center;padding:20px;background:radial-gradient(circle at 30% 20%,#2b1f45,#16131a 70%)}
+.gate[hidden]{display:none}
+.gate .box{max-width:420px;width:100%;text-align:center;background:var(--surface);border:1px solid var(--line);border-radius:28px;padding:36px 28px}
+.gate .logo{margin:0 0 12px}
+.gate .age{display:inline-grid;place-items:center;width:64px;height:64px;border-radius:50%;border:2px solid var(--red);font:800 22px var(--display);color:var(--red);margin-bottom:16px}
+.gate h2{margin-bottom:10px}
+.gate p{color:var(--muted);font-size:14px;margin:0 0 22px}
+.gate .acts{display:grid;gap:10px}
+.tag18{display:inline-block;border:1px solid var(--red);color:var(--red);border-radius:8px;padding:0 8px;font-size:12px;font-weight:700;margin-left:8px;vertical-align:middle}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="gate" id="gate" role="dialog" aria-modal="true" aria-labelledby="gt">
+  <div class="box">
+    <div class="logo">XXV</div>
+    <div class="age" aria-hidden="true">18+</div>
+    <h2 id="gt">Conteúdo para maiores de 18 anos</h2>
+    <p>A XXV tem vídeos destinados a adultos. Você tem 18 anos ou mais? Para criar conta, será exigida uma verificação de idade.</p>
+    <div class="acts">
+      <button class="btn" id="yes">Tenho 18 anos ou mais</button>
+      <button class="btn ghost" id="no">Sou menor de 18 anos</button>
+    </div>
+  </div>
+</div>
+<div class="app" id="appRoot" inert>
+  <aside class="side" aria-label="Navegação principal">
+    <div class="logo">XXV</div>
+    <nav class="nav" id="nav"></nav>
+  </aside>
+  <main>
+    <header class="top">
+      <span class="mlogo">XXV</span>
+      <label class="search"><svg class="i" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input id="q" type="search" placeholder="Buscar vídeos e criadores" aria-label="Buscar vídeos e criadores"></label>
+      <button class="btn ghost" data-soon="Login e cadastro chegam na Etapa 2.">Entrar</button>
+    </header>
+
+    <section class="hero" aria-labelledby="h1">
+      <div class="big" aria-hidden="true">XXV</div>
+      <h1 id="h1">Vídeos de quem você acompanha.</h1>
+      <p>Siga criadores, assista, comente e salve o que gostar. Quem cria publica em minutos.</p>
+      <div class="row">
+        <button class="btn" data-soon="Cadastro de espectador chega na Etapa 2.">Começar a assistir</button>
+        <button class="btn ghost" data-soon="Painel do criador chega na Etapa 4.">Quero publicar</button>
+      </div>
+    </section>
+
+    <section class="sec" aria-labelledby="cat">
+      <h2 id="cat">Categorias</h2>
+      <p>As categorias serão gerenciadas pelo painel administrativo.</p>
+      <div class="chips" id="chips"></div>
+    </section>
+
+    <section class="sec" aria-labelledby="dest">
+      <h2 id="dest">Em destaque</h2>
+      <div class="grid"><div class="empty"><strong>Ainda não há vídeos publicados</strong><span>Os destaques aparecem aqui assim que o primeiro criador publicar.</span></div></div>
+    </section>
+
+    <section class="sec" aria-labelledby="free">
+      <h2 id="free">Vídeos +18 gratuitos <span class="tag18">18+</span></h2>
+      <p>Vídeos liberados sem custo por criadores com idade e identidade verificadas.</p>
+      <div class="grid"><div class="empty"><strong>Nenhum vídeo +18 gratuito ainda</strong><span>Criadores verificados poderão marcar vídeos como +18 e gratuitos a partir da Etapa 4.</span></div></div>
+    </section>
+
+    <section class="sec" aria-labelledby="cri">
+      <h2 id="cri">Criadores populares</h2>
+      <div class="grid"><div class="empty"><strong>Nenhum criador por aqui ainda</strong><span>Seja o primeiro a criar um perfil.</span></div></div>
+    </section>
+
+    <section class="sec" aria-labelledby="rec">
+      <h2 id="rec">Recentes e mais assistidos</h2>
+      <div class="grid"><div class="empty"><strong>Sem vídeos recentes</strong><span>Esta seção será alimentada pelo banco de dados na Etapa 4.</span></div></div>
+    </section>
+  </main>
+</div>
+<nav class="bottom" id="bottom" aria-label="Navegação móvel"></nav>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script>
+const P={
+ home:'<path d="M3 11 12 3l9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>',
+ explore:'<circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5-5 2 2-5z"/>',
+ pub:'<path d="M12 5v14M5 12h14"/>',
+ msg:'<path d="M21 12a8 8 0 0 1-11.5 7.2L4 20l1-4.6A8 8 0 1 1 21 12z"/>',
+ me:'<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>'};
+const items=[['home','Início',null],['explore','Explorar','Explorar chega na Etapa 4.'],['pub','Publicar','Publicação de vídeos chega na Etapa 4.'],['msg','Mensagens','Chat chega na Etapa 7.'],['me','Meu perfil','Perfis chegam na Etapa 3.']];
+const toast=document.getElementById('toast');let tt;
+function say(m){toast.textContent=m;toast.classList.add('show');clearTimeout(tt);tt=setTimeout(()=>toast.classList.remove('show'),2600)}
+function build(el,bottom){items.forEach(([k,l,m])=>{const b=document.createElement('button');
+ b.innerHTML='<svg class="i" viewBox="0 0 24 24">'+P[k]+'</svg><span>'+l+'</span>';
+ if(k==='home')b.setAttribute('aria-current','page');if(bottom&&k==='pub')b.className='pub';
+ b.onclick=()=>m&&say(m);el.appendChild(b)})}
+build(document.getElementById('nav'),false);build(document.getElementById('bottom'),true);
+document.querySelectorAll('[data-soon]').forEach(b=>b.onclick=()=>say(b.dataset.soon));
+const cats=['Todos','Mulheres','Homens','Casais','Gays','Trans'];
+const chips=document.getElementById('chips');
+cats.forEach((c,i)=>{const b=document.createElement('button');b.className='chip';b.textContent=c;b.setAttribute('aria-pressed',i===0);
+ b.onclick=()=>{[...chips.children].forEach(x=>x.setAttribute('aria-pressed',x===b));if(i)say('Filtro por categoria ativa na Etapa 4, com dados reais.')};chips.appendChild(b)});
+document.getElementById('q').addEventListener('keydown',e=>{if(e.key==='Enter')say('A busca será conectada ao banco de dados na Etapa 4.')});
+const gate=document.getElementById('gate'),root=document.getElementById('appRoot');
+document.getElementById('yes').onclick=()=>{gate.hidden=true;root.removeAttribute('inert');say('Confirmação registrada só nesta visita.')};
+document.getElementById('no').onclick=()=>{location.href='https://www.google.com'};
+document.getElementById('yes').focus();
+</script>
+</body>
+</html>

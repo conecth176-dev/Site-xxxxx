@@ -1,0 +1,10 @@
+# Segredos: NUNCA envie para o GitHub
+.env
+.env.*
+!.env.example
+# Dependencias e builds
+node_modules/
+.next/
+dist/
+.vercel/
+.DS_Store
